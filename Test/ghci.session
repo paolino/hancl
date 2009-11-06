@@ -1,0 +1,76 @@
+105> ghci -fglasgow-exts
+   ___         ___ _
+  / _ \ /\  /\/ __(_)
+ / /_\// /_/ / /  | |      GHC Interactive, version 6.4.2, for Haskell 98.
+/ /_\\/ __  / /___| |      http://www.haskell.org/ghc/
+\____/\/ /_/\____/|_|      Type :? for help.
+
+Loading package base-1.0 ... linking ... done.
+Prelude> :l datas matrix shuffle Net/net Net/node Net/net.test metrics.inss.hs Net/taggers Net/collectors.hs
+Compiling Datas            ( datas.hs, interpreted )
+Compiling MetricsInss      ( metrics.inss.hs, interpreted )
+Compiling Node             ( Net/node.hs, interpreted )
+Compiling Matrix           ( matrix.hs, interpreted )
+Compiling Shuffle          ( shuffle.hs, interpreted )
+Compiling Net              ( Net/net.hs, interpreted )
+Compiling Taggers          ( Net/taggers.hs, interpreted )
+Compiling Collectors       ( Net/collectors.hs, interpreted )
+Compiling Main             ( Net/net.test.hs, interpreted )
+Ok, modules loaded: Main, Collectors, Taggers, Net, Shuffle, Matrix, Node, MetricsInss, Datas.
+
+*Main> enet0 $ return undefined  --links iniziali
+(1,[2,3,4])
+(2,[3,4,5])
+(3,[4,5,6])
+(4,[5,6,7])
+(5,[6,7,8])
+(6,[7,8,9])
+(7,[1,8,9])
+(8,[1,2,9])
+(9,[1,2,3])
+
+*Main> enet0 $ new 1   -- un passo evolutivo del nodo 1
+(1,[2,3,4,6])
+(2,[3,4,5])
+(3,[1,4,5,6])
+(4,[1,5,6,7])
+(5,[6,7,8])
+(6,[1,7,8,9])
+(7,[1,8,9])
+(8,[1,2,9])
+(9,[1,2,3])
+
+*Main> enet0 $ replicateM 5 $ new 1  -- 5 passi evolutivi del nodo 1 in solitaria
+(1,[3,4,6,8,9])
+(2,[3,4,5])
+(3,[1,4,5,6])
+(4,[1,5,6,7])
+(5,[6,7,8])
+(6,[1,7,8,9])
+(7,[1,8,9])
+(8,[1,2,9])
+(9,[1,2,3])
+
+*Main> enet0 $ evolve   -- un passo di tutta la rete
+(1,[2,3,4,6,8])
+(2,[3,4,5,7])
+(3,[1,4,5,6,8,9])
+(4,[2,5,6,7,9])
+(5,[2,4,6,7,8,9])
+(6,[1,3,7,8,9])
+(7,[1,2,4,5,8,9])
+(8,[1,2,3,6,9])
+(9,[1,2,3,4,5,6,7,8])
+
+*Main> enet0 $ replicateM 10 $ evolve   -- 10 passi di tutta la rete
+(1,[3,6,8])
+(2,[4,5,7])
+(3,[1,6,8,9])
+(4,[2,5,7,9])
+(5,[2,4,7])
+(6,[1,3,8,9])
+(7,[2,4,5])
+(8,[1,3,6])
+(9,[3,4,6])
+
+

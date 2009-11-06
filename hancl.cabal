@@ -1,0 +1,22 @@
+name:      Hancl
+version:   0.1
+license:   BSD3
+license-file:  LICENSE
+copyright:    Paolo Veronelli ,2007
+author:    Paolo Veronelli
+maintainer:  paolo.veronelli@gmail.com roberto.tazzoli@gmail.com
+stability:   alpha
+homepage:    http://catenova.org/~paolino
+package-url: http://catenova.org/~paolino/distribution/hancl.0.1.tar.gz
+synopsis:  Library for data clustering
+description:  
+build-depends: base, mtl ,QuickCheck
+category: Genetic Programming
+tested-with: GHC
+
+executable: NetCluster
+main-is:Net/Program/Main.hs
+ghc-options: -O3 -fglasgow-exts  -fno-monomorphism-restriction 
+
+
+
